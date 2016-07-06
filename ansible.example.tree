@@ -1,0 +1,364 @@
+is-mbp-cbergeron:deployments cbergeron$ tree -d
+.
+├── ansible_modules
+├── chris_stuff
+├── environments
+├── files
+│   ├── analytics
+│   ├── checkmk
+│   ├── dashboard
+│   ├── edge-load-balancer
+│   ├── external-package-server
+│   ├── federation
+│   ├── idc-jumpbox
+│   ├── key-appliance
+│   ├── logstore
+│   ├── mongodb
+│   └── postgres
+├── filter_plugins
+├── lib
+│   └── pydashboard
+├── roles
+│   ├── alertlogic-log-agent
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   └── tasks
+│   ├── apache
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── bash_prompt_color
+│   │   └── tasks
+│   ├── block-device
+│   │   ├── defaults
+│   │   └── tasks
+│   ├── cassandra
+│   │   └── meta
+│   ├── certificates
+│   │   ├── defaults
+│   │   ├── files -> templates
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── checkmk-helpers
+│   │   ├── defaults
+│   │   └── tasks
+│   ├── checkmk_agent
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── cloud-providers
+│   │   ├── defaults
+│   │   └── tasks
+│   ├── common
+│   │   ├── meta
+│   │   └── tasks
+│   ├── configure_auditd
+│   │   ├── handlers
+│   │   ├── tasks
+│   │   └── templates
+│   ├── configure_sshd
+│   │   ├── handlers
+│   │   └── tasks
+│   ├── consul
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── consul-agent
+│   │   ├── defaults
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── consul-server
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── consul-template
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── tasks
+│   │   └── templates
+│   ├── cs_certificates
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── disable-selinux
+│   │   └── tasks
+│   ├── disable-thp
+│   │   ├── tasks
+│   │   └── templates
+│   ├── docker
+│   │   ├── defaults
+│   │   ├── tasks
+│   │   └── templates
+│   ├── elasticsearch
+│   │   ├── defaults
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── env-check
+│   │   ├── meta
+│   │   └── tasks
+│   ├── epel
+│   │   ├── defaults
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── federation
+│   │   ├── defaults
+│   │   ├── meta
+│   │   └── tasks
+│   ├── git
+│   │   └── tasks
+│   ├── hostname
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── hosts
+│   │   └── tasks
+│   ├── htpasswd
+│   │   └── tasks
+│   ├── idc-scripts
+│   │   └── tasks
+│   ├── increase_fd_limits
+│   │   └── tasks
+│   ├── ionic-geoip-db
+│   │   ├── files
+│   │   ├── tasks
+│   │   └── templates
+│   ├── ionic-repo
+│   │   ├── files
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── ip-masq
+│   │   ├── tasks
+│   │   └── templates
+│   ├── ip-whitelist
+│   │   ├── handlers
+│   │   ├── tasks
+│   │   ├── templates
+│   │   └── vars
+│   ├── iptables
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── key_appliance_enrollment
+│   │   ├── defaults
+│   │   ├── meta
+│   │   └── tasks
+│   ├── keyspaces
+│   │   └── tasks
+│   ├── logging
+│   │   └── defaults
+│   ├── logout-prompt
+│   │   ├── files
+│   │   └── tasks
+│   ├── logstash
+│   │   ├── defaults
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── logstash-forwarder
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── mail-relay
+│   │   ├── defaults
+│   │   ├── handlers
+│   │   ├── tasks
+│   │   └── templates
+│   ├── mongo
+│   │   ├── defaults
+│   │   ├── handlers
+│   │   └── tasks
+│   ├── mongodb-replicaset-hosts
+│   │   ├── tasks
+│   │   └── templates
+│   ├── motd
+│   │   ├── tasks
+│   │   └── templates
+│   ├── nginx
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── nginx-geoip
+│   │   ├── files
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── vars
+│   ├── nginx-resty
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── nginx-service-proxy
+│   │   ├── defaults
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── ntp
+│   │   └── tasks
+│   ├── ops-status-checkmk
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── meta
+│   │   └── tasks
+│   ├── oraclejdk
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── meta
+│   │   └── tasks
+│   ├── policy
+│   │   └── tasks
+│   ├── postgres_cluster
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── python34
+│   │   └── tasks
+│   ├── rabbitmq
+│   │   └── tasks
+│   ├── redis
+│   │   ├── defaults
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── redis-sentinel
+│   │   ├── defaults
+│   │   ├── handlers
+│   │   ├── tasks
+│   │   └── templates
+│   ├── remote-facts
+│   │   ├── defaults
+│   │   └── tasks
+│   ├── resolv_conf
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── rsyslog
+│   │   ├── handlers
+│   │   ├── tasks
+│   │   └── templates
+│   ├── secure_cron
+│   │   └── tasks
+│   ├── server_inventory
+│   │   ├── files
+│   │   └── tasks
+│   ├── signal-science-agent
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── ssh-hostkey-check
+│   │   ├── files
+│   │   └── tasks
+│   ├── ssl_ciphers
+│   │   └── defaults
+│   ├── supervisor
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── timezone
+│   │   ├── defaults
+│   │   ├── handlers
+│   │   ├── tasks
+│   │   └── templates
+│   ├── tune_ip_stack_internal
+│   │   ├── defaults
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── update-pkgs
+│   │   ├── meta
+│   │   ├── tasks
+│   │   └── templates
+│   ├── user-public-keys
+│   │   ├── defaults
+│   │   ├── meta
+│   │   ├── tasks
+│   │   ├── templates
+│   │   └── vars
+│   ├── vpn-mesh
+│   │   ├── defaults
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── tasks
+│   │   └── templates
+│   └── whichsupervisor
+│       ├── defaults
+│       └── handlers
+├── templates
+│   ├── analytics
+│   ├── cassandra
+│   │   ├── ds_agent
+│   │   └── repos
+│   ├── checkmk
+│   ├── consul
+│   ├── dashboard
+│   ├── data-middleware
+│   ├── data-retention
+│   ├── developer-portal
+│   ├── download-site
+│   ├── dump
+│   ├── edge-load-balancer
+│   │   └── lua
+│   │       └── auth
+│   ├── elasticsearch
+│   ├── enrollment-portal
+│   ├── enterprise-manager
+│   ├── external-package-server
+│   ├── federation
+│   ├── geography
+│   ├── idp
+│   ├── internal-loadbalancer
+│   ├── jumpbox
+│   ├── key-appliance
+│   ├── kibana
+│   ├── logstash
+│   ├── logstore
+│   ├── logstore-api
+│   ├── logstore-elasticsearch
+│   ├── logstore-logstash
+│   ├── mongodb
+│   ├── monitor
+│   ├── package
+│   ├── policy
+│   ├── postgres
+│   ├── prometheus
+│   ├── rabbitmq
+│   ├── salt-master
+│   ├── salt-minion
+│   ├── tenantgui
+│   └── user
+├── vault
+└── versions
+
+360 directories
