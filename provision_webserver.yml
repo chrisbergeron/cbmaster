@@ -5,8 +5,6 @@
   sudo: true
 
   tasks:
-#  - name: Test connection
-#    ping:
 
   - name: SSHD | Copy sshd config from template
     template: src=templates/sshd_config.template dest=/etc/ssh/sshd_config owner=root group=root mode=0600
@@ -46,10 +44,8 @@
   - name: Mysql | Install Mysql
     action: yum name={{ item }}
     with_items:
-    #  - mysql-python
       - mysql
       - mysql-server
-    #  state: latest
 
   - name: Mysql | Start the MySQL service
     action: service name=mysqld state=started
@@ -58,28 +54,6 @@
     yum:
       name: MySQL-python
       state: latest
-
-  - name: Mysql | Update MySQL root password for all root accounts
-    mysql_user: name=root host={{ item }} password={{ mysql_root_pass }} state=present
-    with_items:
-      - "{{ ansible_hostname }}"
-      - 127.0.0.1
-      - ::1
-      - localhost
-
-  - name: Mysql | Copy the root credentials as .my.cnf file
-    template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
-
-  - name: Mysql | Ensure Anonymous user(s) are not in the database
-    mysql_user: name='' host={{ item }} state=absent
-    with_items:
-      - localhost
-      - "{{ ansible_hostname }}"
-
-  - name: Mysql | Remove the test database
-    mysql_db: name=test state=absent
-    notify:
-      - Restart MySQL
 
   - name: Wordpress | Download Wordpress
     get_url:
@@ -96,3 +70,8 @@
 
   - name: Wordpress | Copy wp-config.php from template
     template: src=templates/wp-config.php.template dest=/home/{{ deploy_user }}/wordpress/wp-config.php mode=0644 owner=nobody group=wheel
+
+  - name: Wordpress | Install php-gd (required for initial config)
+    yum:
+      name: php-gd
+      state: latest
