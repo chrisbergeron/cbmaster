@@ -6,28 +6,34 @@
   tasks:
   - name: Test connection
     ping:
+
   - name: NGINX | Installing NGINX repo rpm
     yum:
       name: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
   - name: NGINX | Installing NGINX
     yum:
       name: nginx
       state: latest
+
   - name: NGINX | Starting NGINX
     service:
       name: nginx
       state: started
+
   - name: Mysql | Installing Mysql
     yum:
       name: https://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
-  - name: Wordpress | Install Wordpress
+
+  - name: Wordpress | Download Wordpress
     get_url:
-      url="http://wordpress.org/latest.tar.gz"
-      dest="/home/{{ deploy_user }}/"
+      url="http://wordpress.org/wordpress-latest.tar.gz"
+      dest="/home/{{ deploy_user }}/wordpress-latest.tar.gz"
     register: new_archive
+
   - name: Wordpress | Unarchive latest tarball
     unarchive:
       src="/home/{{ deploy_user }}/wordpress-latest.tar.gz"
-      dest="/home/{{ deploy_user }}/wordpress/"
+      dest="/home/{{ deploy_user }}/"
       copy=no
     when: new_archive|changed
