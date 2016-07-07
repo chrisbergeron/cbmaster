@@ -1,0 +1,10 @@
+---
+# tasks file for nginx
+- name: NGINX | Installing NGINX
+  yum:
+    name: nginx
+    state: latest
+- name: NGINX | Starting NGINX
+  service:
+    name: nginx
+    state: started

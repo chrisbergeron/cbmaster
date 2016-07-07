@@ -1,6 +1,8 @@
 ---
 - hosts: www
-  remote_user: root
+  vars_files:
+    - vars/main.yml
+  sudo: true
   tasks:
   - name: Test connection
     ping:
@@ -15,3 +17,17 @@
     service:
       name: nginx
       state: started
+  - name: Mysql | Installing Mysql
+    yum:
+      name: https://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+  - name: Wordpress | Install Wordpress
+    get_url:
+      url="http://wordpress.org/latest.tar.gz"
+      dest="/home/{{ deploy_user }}/"
+    register: new_archive
+  - name: Wordpress | Unarchive latest tarball
+    unarchive:
+      src="/home/{{ deploy_user }}/wordpress-latest.tar.gz"
+      dest="/home/{{ deploy_user }}/wordpress/"
+      copy=no
+    when: new_archive|changed
