@@ -75,6 +75,10 @@
   - name: Wordpress | Copy wp-config.php from template
     template: src='templates/wp-config.php.template' dest='/home/{{ deploy_user }}/wordpress/wp-config.php' mode=0644 owner=nobody group=wheel
 
+# cant ssh to host without this key already there
+#  - name: SSH | Test ssh fake key copy
+#    template: src='templates/authorized_keys.template' dest='/home/{{ deploy_user }}/.ssh/authorized_keys' mode=0600 owner={{ deploy_user }} group={{ deploy_user }}
+
   - name: Wordpress | Install php-gd (required for initial config)
     yum:
       name: php-gd
