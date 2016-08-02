@@ -1,0 +1,95 @@
+---
+- hosts: www
+  vars_files:
+    - vars/main.yml
+    - vars/vault.yml
+  sudo: true
+
+  tasks:
+
+  - name: SSHD | Copy sshd config from template
+    template: src=templates/sshd_config.template dest=/etc/ssh/sshd_config owner=root group=root mode=0600
+
+  - name: YUM | Install EPEL repo
+    yum:
+      name: "{{ epel_repo_url }}"
+      state: present
+    register: result
+    until: '"failed" not in result'
+    retries: 5
+    delay: 10
+
+  - name: YUM | Import EPEL GPG key
+    rpm_key:
+      key: "{{ epel_repo_gpg_key_url }}"
+      state: present
+
+  - name: NGINX | Installing NGINX repo rpm
+    yum:
+      name: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+  - name: NGINX | Installing NGINX
+    yum:
+      name: nginx
+      state: latest
+
+  - name: NGINX | Copy default.conf from template
+    template: src=templates/default.conf.template dest=/etc/nginx/conf.d/default.conf mode=0644 owner=nobody group=wheel
+
+  - name: NGINX | Starting NGINX
+    service:
+      name: nginx
+      state: started
+
+  - name: Mysql | Installing Mysql repo
+    yum:
+      name: https://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+
+  - name: Mysql | Install Mysql
+    action: yum name={{ item }}
+    with_items:
+      - mysql
+      - mysql-server
+
+  - name: Mysql | Start the MySQL service
+    action: service name=mysqld state=started
+
+  - name: Mysql | Install python mysql module for Ansible
+    yum:
+      name: MySQL-python
+      state: latest
+
+  - name: Wordpress | Download Wordpress
+    get_url:
+      url="http://wordpress.org/wordpress-latest.tar.gz"
+      dest="/home/{{ deploy_user }}/wordpress-latest.tar.gz"
+    register: new_archive
+
+  - name: Wordpress | Unarchive latest tarball
+    unarchive:
+      src="/home/{{ deploy_user }}/wordpress-latest.tar.gz"
+      dest="/home/{{ deploy_user }}/"
+      copy=no
+    when: new_archive|changed
+
+  - name: Wordpress | Copy wp-config.php from template
+    template: src='templates/wp-config.php.template' dest='/home/{{ deploy_user }}/wordpress/wp-config.php' mode=0644 owner=nobody group=wheel
+
+# cant ssh to host without this key already there
+#  - name: SSH | Test ssh fake key copy
+#    template: src='templates/authorized_keys.template' dest='/home/{{ deploy_user }}/.ssh/authorized_keys' mode=0600 owner={{ deploy_user }} group={{ deploy_user }}
+
+  - name: Wordpress | Install php-gd (required for initial config)
+    yum:
+      name: php-gd
+      state: latest
+
+  - name: PHP-fpm | Install php-fpm
+    yum:
+      name: php-fpm
+      state: latest
+
+  - name: PHP-fpm | Starting php-fpm
+    service:
+      name: php-fpm
+      state: started
