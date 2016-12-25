@@ -1,2 +1,2 @@
 ---
-# vars file for mysql
+mysql_root_pass: cosine1234 #MySQL Root Password

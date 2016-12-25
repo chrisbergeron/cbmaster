@@ -34,7 +34,7 @@
       state: latest
 
   - name: NGINX | Copy default.conf from template
-    template: src=templates/default.conf.template dest=/etc/nginx/conf.d/default.conf mode=0644 owner=nobody group=wheel
+    template: src=templates/nginx.default.conf.template dest=/etc/nginx/conf.d/default.conf mode=0644 owner=nobody group=wheel
 
   - name: NGINX | Starting NGINX
     service:
