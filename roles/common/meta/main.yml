@@ -1,0 +1,24 @@
+---
+allow_duplicates: no
+dependencies:
+  - { role: remote-facts }
+  - { role: user-public-keys, when: "ansible_local is not defined or 'user_public_keys' not in ansible_local.keys() or 'provisioned' not in ansible_local.user_public_keys.keys() or not ansible_local.user_public_keys.provisioned" }
+  - { role: hostname }
+  - { role: resolv_conf } # Only used in some environments
+  - { role: dhclient }
+  - { role: hosts }
+  - { role: epel }
+  - { role: ionic-repo }
+  - { role: checkmk_agent }
+  - { role: motd }
+  - { role: rsyslog } # Requires cloud-providers
+  - { role: consul-agent }
+  - { role: timezone }
+  - { role: ntp }
+  - { role: disable-selinux }
+  - { role: server_inventory }
+  - { role: secure_cron, when: ansible_os_family == 'RedHat' }
+  - { role: configure_sshd, when: ansible_os_family == 'RedHat' }
+  - { role: configure_auditd, when: ansible_os_family == 'RedHat' }
+  - { role: ssh-hostkey-check, when: ansible_os_family == 'RedHat' }
+  - { role: bash_prompt_color, when: ansible_os_family == 'RedHat' }

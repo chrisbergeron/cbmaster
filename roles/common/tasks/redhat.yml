@@ -1,0 +1,56 @@
+---
+- name: RedHat | Disable Services
+  service: name={{ item }} state=stopped enabled=no
+  with_items:
+    - iprinit
+    - iprupdate
+    - iprdump
+    - firewalld
+    - rpcbind.socket
+    - rpcbind.service
+    - dnsmasq
+    - splunk
+    - yum-cron
+  ignore_errors: true
+
+- name: RedHat | Remove services
+  yum: name={{ item }} state=absent
+  with_items:
+    - avahi
+    - avahi-libs
+    - puppet
+    - puppetlabs-release
+    - hiera
+    - facter
+    - splunkforwarder
+    - firewalld
+  ignore_errors: true
+
+- name: RedHat | Install common packages
+  yum: name={{ item }}
+  with_items:
+    - iptables
+    - iptables-services
+    - htop
+    - ntp
+    - jq
+    - haveged
+    - python-pip
+    - iptraf-ng
+    - vim
+    - bash-completion
+    - bzip2
+    - unzip
+    # Needed to curl from ansible
+    - python-httplib2
+    - bind-utils
+    - tcpdump
+    - net-tools
+    - wget
+    - rsyslog
+
+- name: RedHat | Start services
+  service: name={{ item }} state=running enabled=yes
+  with_items:
+    - haveged
+    - rsyslog

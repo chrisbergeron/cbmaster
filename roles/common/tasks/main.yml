@@ -1,0 +1,8 @@
+---
+- name: Include RedHat Common Tasks
+  include: redhat.yml
+  when: ansible_distribution in ['CentOS', 'RedHat', 'Amazon']
+
+- name: Include Debian Common Tasks
+  include: debian.yml
+  when: ansible_distribution in ['Debian', 'Ubuntu']
